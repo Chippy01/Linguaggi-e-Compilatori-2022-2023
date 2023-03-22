@@ -11,13 +11,15 @@ bool runOnBasicBlock2(BasicBlock &B) {
 
       if (inst.getOpcode() == Instruction::Add) {
         ConstantInt *c = dyn_cast<ConstantInt>(inst.getOperand(1));
-        if (c && c->getValue().isZero()){
-          inst.replaceAllUsesWith(inst.getOperand(0));
-
-        }
-
-
-        
+        if (c && c->getValue().isZero())
+          inst.replaceAllUsesWith(inst.getOperand(0));    
+      } else if (inst.getOpcode() == Instruction::Mul){
+        ConstantInt *c1 = dyn_cast<ConstantInt>(inst.getOperand(0));
+        ConstantInt *c2 = dyn_cast<ConstantInt>(inst.getOperand(1));
+        if (c1 && c1->getValue().isOneValue())
+          inst.replaceAllUsesWith(inst.getOperand(1));    
+        else if (c2 && c2->getValue().isOneValue())
+          inst.replaceAllUsesWith(inst.getOperand(0));    
       }
     }
    
