@@ -30,7 +30,13 @@ extern "C" PassPluginLibraryInfo llvmGetPassPluginInfo() {
                     return true;
                   }
                   // TODO: Implementare gli stub per
-		  // Algebraic Identity
+		  // Algebraic Identity x+0=0+x ->x
+                  				//x*1=1*x ->x
+                 if (Name == "AlgebricIdentity") {
+                    MPM.addPass(AlgebricIdentityPass());
+                    return true;
+                  }
+
 		  // Strength Reduction
 		  // Multi-instruction Operations
                   return false;

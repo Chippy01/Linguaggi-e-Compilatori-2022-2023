@@ -1,5 +1,6 @@
 #include "LocalOpts.h"
 #include "llvm/IR/InstrTypes.h"
+#include <string.h>
 
 using namespace llvm;
 
@@ -53,6 +54,22 @@ bool runOnBasicBlock(BasicBlock &B) {
     // Si possono aggiornare le singole references separatamente?
     // Controlla la documentazione e prova a rispondere.
     Inst1st.replaceAllUsesWith(NewInst);
+
+    //rimpiazzare mul con shift solo se operando è multiplo di 2
+
+    for (auto iter = B.begin(); iter != B.end(); ++iter){
+      Instruction &inst = *iter;
+
+      if (strcmp(inst.getOpcodeName(), "mul") == 0){
+
+        outs() << "sono in mul \n";
+        for (auto *Iter = Inst1st.op_begin(); Iter != Inst1st.op_end(); ++Iter) {
+          Value *Operand = *Iter;
+          
+
+        }
+      }
+    }
 
     return true;
   }
